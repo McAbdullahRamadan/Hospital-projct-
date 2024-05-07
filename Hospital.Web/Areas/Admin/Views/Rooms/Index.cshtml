@@ -1,0 +1,73 @@
+﻿@using Hospital.Utilities
+@* @using cloudscribe.Pagination.Models *@
+@model PagedResult<Hospital.ViewModels.RoomViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                RoomNumber
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Statues
+            </th>
+            <th>
+                HospitalInfoID
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Statues)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hospitalInfo.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.id  }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<cs-pager cs-paging-pageSize=(int)Model.PageSize
+          cs-paging-pageNumber=(int)Model.PageNumber
+          cs-paging-TotalItems=(int)Model.TotalItem
+          cs-pagenumber-param="pageNumber"
+          asp-controller="Rooms"
+
+          asp-action="index"
+          cs-pager-li-current-class="page-item active"
+          cs-pager-li-other-class="page-item"
+          cs-pager-li-non-active-class="page-item disabled"
+          cs-pager-link-current-class="page-link"
+          cs-pager-link-other-class="page-link">
+</cs-pager>
